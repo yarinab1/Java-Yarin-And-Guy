@@ -97,4 +97,9 @@ public class Junction {
 		}
 		nextEnterRoad++;
 	}
+	
+	public String toString()
+	{
+		return "the Junction Name is: "+"JunctionName\n";
+	}
 }
