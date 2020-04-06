@@ -1,6 +1,8 @@
 package components;
+import java.lang.Math; 
 
 public class Road {
+	
 	private Junction fromJunc;
 	private Junction toJunc;
 	private String[] allowedVehicles;// holds the list of vehicle types
@@ -10,16 +12,17 @@ public class Road {
 	private double Lenght;// the distance between the two junctions.
 	private int MaxSpeed;
 	
+	
 	public Road(Junction from,Junction to)
 	{
-		fromJunc=new Junction(from);
-		toJunc=new Junction(to);
+		fromJunc=from;
+		toJunc=to;
 	}
 	
 	public Road(Junction from,Junction to, String[] allowed,boolean open, boolean enabled)
 	{
-		fromJunc=new Junction(from);
-		toJunc=new Junction(to);
+		fromJunc=from;
+		toJunc=to;
 		allowedVehicles=new String[allowed.length];
 		for(int i=0;i<allowed.length;i++)
 		{
@@ -63,8 +66,16 @@ public class Road {
         temp[allowedVehicles.length]=type;
         allowedVehicles=new String [allowedVehicles.length+1];
         allowedVehicles=temp;
-        
-        
 	}
+	public double countLength()//calculates the length of the road using the coordinates
+	{
+		return Math.sqrt(Math.pow(toJunc.getX()-fromJunc.getX(), 2)+Math.pow(toJunc.getX()-fromJunc.getX(), 2));
+	}
+	
+	public String toString()
+	{
+		return "the Road is from "+ fromJunc.getJunctionName()+"to "+toJunc.getJunctionName()+"\n";
+	}
+	
 	
 }
