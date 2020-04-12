@@ -18,7 +18,7 @@ public class Map {
      
         for(int i=0;i<10;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
-    }; //Creates a map with 20 random junctions and connects all of them one to another with roads.
+    } //Creates a map with 20 random junctions and connects all of them one to another with roads.
 
     public Map (int junctions, int roads){
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
@@ -40,7 +40,7 @@ public class Map {
 
             this.roads.add(new Road(this.junctions.get(rand.nextInt(tempIndex.get(0))), this.junctions.get(tempIndex.get(1))));
         }
-    }; //Creates a random map with given quantity of junctions and roads.
+    } //Creates a random map with given quantity of junctions and roads.
 
     public Map (ArrayList<Junction> juncs){
         junctions = juncs;
@@ -49,12 +49,23 @@ public class Map {
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
         if(junctions.size()%2!=0)
             roads.add(new Road(junctions.get(junctions.size()/2), junctions.get((junctions.size()/2)+1)));
-    };
+    }
 
     public Map (ArrayList<Junction>juncs, ArrayList<Road>roads){
         junctions = juncs;
         this.roads = roads;
-    };
+    }
+    
+    public Map(int numOfJunc)
+    {
+    	Random rand = new Random();
+    	String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
+    			,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
+    	for(int i=0;i<numOfJunc;i++)
+    	{
+    		this.junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble())));
+    	}
+    }
 
     public void addRoad(Road r){ roads.add(r); };
     public void removeRoad(Road r){ roads.remove(r);};
