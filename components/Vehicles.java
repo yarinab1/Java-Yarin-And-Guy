@@ -1,6 +1,6 @@
 package components;
 
-class Vehicles{
+public class Vehicles{
 	private int id;
 	private String type;
 	private int speed; //average speed for this type of vehicle.
