@@ -1,72 +1,98 @@
 package components;
-import java.lang.Math; 
+
+import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Road {
 	
 	private Junction fromJunc;
 	private Junction toJunc;
-	private String[] allowedVehicles;// holds the list of vehicle types
-	//that are allowed to move on the road.
+	private ArrayList<VehicleType> allowedVehicles;// holds the list of vehicle types
+									 //that are allowed to move on the road.
 	private boolean isOpen;// True when the light is green.
 	private boolean isEnabled;//appears on the map
-	private double Lenght;// the distance between the two junctions.
-	private int MaxSpeed;
-	
+	private double lenght;// the distance between the two junctions.
+	private int maxSpeed;
+
 	
 	public Road(Junction from,Junction to)
 	{
 		fromJunc=from;
 		toJunc=to;
-	}
-	
-	public Road(Junction from,Junction to, String[] allowed,boolean open, boolean enabled)
-	{
-		fromJunc=from;
-		toJunc=to;
-		allowedVehicles=new String[allowed.length];
-		for(int i=0;i<allowed.length;i++)
+		lenght = countLength();
+		Random rand = new Random();
+
+		String[] vehiclesTypes = {"Truck","Motorcycle","Bikes","Private","Tricycle","Ambulance","jeep","SUV","Tractor"};
+		//make an random index list to take set an random allowedVehicles list
+		ArrayList<Integer> randIndex = new ArrayList<>();
+		int sizeOfRandIndex = rand.nextInt(vehiclesTypes.length)+1; // +1 to prevent 0
+		for(int i = 0; i<sizeOfRandIndex;i++)
 		{
-			allowedVehicles[i]=allowed[i];
+			int tempIndex;
+			do{
+				tempIndex = rand.nextInt(vehiclesTypes.length);
+			}while(randIndex.contains(tempIndex));
+
+			randIndex.add(tempIndex);
 		}
-		isOpen=open;
-		isEnabled=enabled;
+		for(int i = 0; i<sizeOfRandIndex;i++)
+			allowedVehicles.add(new VehicleType(vehiclesTypes[randIndex.get(i)],10 * (rand.nextInt(12) + 6))); // 60 - 180 (average speed)
+
+		isOpen = rand.nextBoolean();
+		isEnabled = rand.nextBoolean();
+
+		maxSpeed = 10 * (rand.nextInt(12) + 1); // {10,20,30,40,50,60,70,80,90,100,110,120,130}
 		
 	}
 	
-	public boolean GetLight() {return isOpen;}//check if the light is green or not
-	public boolean GetAppears() {return isEnabled;}
-	public double GetLenght() {return Lenght;}
-	public int GetMaxSpeed() {return MaxSpeed;}
+	public Road(Junction from,Junction to, ArrayList<VehicleType> allowed,boolean open, boolean enabled)
+	{
+		fromJunc=from;
+		toJunc=to;
+		allowedVehicles.addAll(allowed);
+		isOpen=open;
+		isEnabled=enabled;
+		lenght = countLength();
+	}
 	
-	public void SetLight(boolean TorF)//true or false
+	public boolean getLight() {return isOpen;}//check if the light is green or not
+	public boolean getAppears() {return isEnabled;}
+	public double getLenght() {return lenght;}
+	public int getMaxSpeed() {return maxSpeed;}
+	public Junction getFromJunc() {return fromJunc;}
+	public ArrayList<VehicleType> getAllowedVehicles() {return allowedVehicles;}
+	public Junction getToJunc() {return toJunc;}
+	
+	public void setFromJunc(Junction fromJunc) {
+		this.fromJunc = fromJunc;
+	}
+
+	public void setToJunc(Junction toJunc) {
+		this.toJunc = toJunc;
+	}
+
+	public void setLight(boolean TorF)//true or false
 	{
 		isOpen=TorF;
 	}
 	
-	public void SetAppears(boolean TorF)//true or false
+	public void setAppears(boolean TorF)//true or false
 	{
 		isEnabled=TorF;
 	}
-	public void SetLenght(double len)
+	public void setLenght(double len)
 	{
-		Lenght=len;
+		lenght=len;
 	}
-	public void SetMaxSpeed (int max)
+	public void setMaxSpeed (int max)
 	{
-		MaxSpeed=max;
+		maxSpeed=max;
 	}
+
 	
-	public void addVehicleType(String type)
-	{
-		String[] temp=new String[allowedVehicles.length+1];
-        for(int i=0;i<allowedVehicles.length;i++)
-        {
-        	temp[i]=allowedVehicles[i];
-        }
-        temp[allowedVehicles.length]=type;
-        allowedVehicles=new String [allowedVehicles.length+1];
-        allowedVehicles=temp;
-	}
+	public void addVehicleType(VehicleType type) { allowedVehicles.add(type); }
+	
 	public double countLength()//calculates the length of the road using the coordinates
 	{
 		return Math.sqrt(Math.pow(toJunc.getX()-fromJunc.getX(), 2)+Math.pow(toJunc.getX()-fromJunc.getX(), 2));
@@ -74,8 +100,22 @@ public class Road {
 	
 	public String toString()
 	{
-		return "the Road is from "+ fromJunc.getJunctionName()+"to "+toJunc.getJunctionName()+"\n";
+		return "The Road is from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName()+"\n";
 	}
-	
-	
+
+	public boolean equals(Road R){
+		boolean isAllowedVehiclesEquals = true;
+		if(allowedVehicles.size() == R.allowedVehicles.size())
+		{
+			for(int i=0;i<allowedVehicles.size();i++)
+				if(!allowedVehicles.get(i).equals(R.allowedVehicles.get(i))){
+					isAllowedVehiclesEquals = false;
+					break;
+				}
+		}else return false;
+
+		if(fromJunc.equals(R.fromJunc) && toJunc.equals(R.toJunc) && isAllowedVehiclesEquals && isOpen == R.isOpen && isEnabled == R.isEnabled && lenght == R.lenght && maxSpeed == R.maxSpeed)
+			return true;
+		return false;
+	}; 
 }

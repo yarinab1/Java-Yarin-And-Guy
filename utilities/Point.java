@@ -2,8 +2,8 @@ package utilities;
 
 public class Point {
 
-	private double x;
-	private double y;
+	private final double x;
+	private final double y;
 	
 	public Point()//default constructor
 	{
@@ -13,8 +13,10 @@ public class Point {
 	
 	public Point(double x,double y)
 	{
-		this.x=x;
-		this.y=y;
+		if(x>=0 && x<1000000) this.x=x;
+		else this.x=0;
+		if(y>=0 && y<800) this.y=y;
+		else this.y=0;
 	}
 	
 	public double getX() {
@@ -25,17 +27,12 @@ public class Point {
 		return y;
 	}
 	
-	public void setX(double x) {
-		this.x=x;
-	}
-
-	public void setY(double y) {
-		this.y=y;
-	}
-	
 	public String toString()
 	{
-		return "(" + this.x + "," + this.y + ")";
-		
+		return "Points: (" + this.x + "," + this.y + ")";
+	}
+
+	public boolean equals(Point P) {
+		return super.equals(P);
 	}
 }
