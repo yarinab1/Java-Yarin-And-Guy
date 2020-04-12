@@ -9,6 +9,7 @@ public class Road {
 	private Junction fromJunc;
 	private Junction toJunc;
 	private ArrayList<VehicleType> allowedVehicles;// holds the list of vehicle types
+
 									 //that are allowed to move on the road.
 	private boolean isOpen;// True when the light is green.
 	private boolean isEnabled;//appears on the map
@@ -37,7 +38,9 @@ public class Road {
 			randIndex.add(tempIndex);
 		}
 		for(int i = 0; i<sizeOfRandIndex;i++)
+
 			allowedVehicles.add(new VehicleType(vehiclesTypes[randIndex.get(i)],10 * (rand.nextInt(12) + 6))); // 60 - 180 (average speed)
+
 
 		isOpen = rand.nextBoolean();
 		isEnabled = rand.nextBoolean();
@@ -51,6 +54,7 @@ public class Road {
 		fromJunc=from;
 		toJunc=to;
 		allowedVehicles.addAll(allowed);
+    
 		isOpen=open;
 		isEnabled=enabled;
 		lenght = countLength();
@@ -61,6 +65,7 @@ public class Road {
 	public double getLenght() {return lenght;}
 	public int getMaxSpeed() {return maxSpeed;}
 	public Junction getFromJunc() {return fromJunc;}
+
 	public ArrayList<VehicleType> getAllowedVehicles() {return allowedVehicles;}
 	public Junction getToJunc() {return toJunc;}
 	
@@ -91,8 +96,9 @@ public class Road {
 	}
 
 	
+
 	public void addVehicleType(VehicleType type) { allowedVehicles.add(type); }
-	
+
 	public double countLength()//calculates the length of the road using the coordinates
 	{
 		return Math.sqrt(Math.pow(toJunc.getX()-fromJunc.getX(), 2)+Math.pow(toJunc.getX()-fromJunc.getX(), 2));

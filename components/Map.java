@@ -20,6 +20,7 @@ public class Map {
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
     }; //Creates a map with 20 random junctions and connects all of them one to another with roads.
 
+
     public Map (int junctions, int roads){
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
                                 ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};// 20 names of junctions
@@ -85,6 +86,7 @@ public class Map {
             if(((Junction) item.getFromJunc()).equals(junc))
                 removeRoad(item);
         }
+
     }; //removes the junction and all connected to it roads from the map.
 
     public boolean equals(Map M) {

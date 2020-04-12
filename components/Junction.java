@@ -145,7 +145,7 @@ public class Junction {
 
 		if(junctionName == J.junctionName && location.equals(J.location) && delay == J.delay && hasLight == J.hasLight && roadsIsEqual)
 			return true;
-			
+	
 		return false;
 	};
 }
