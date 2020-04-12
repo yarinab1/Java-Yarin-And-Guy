@@ -1,25 +1,22 @@
 package components;
 import java.util.ArrayList;
 class Route{
-    private ArrayList<Junction> junctions;
-    private ArrayList<Road> roads;
+    private ArrayList<Junction> junctions = new ArrayList<>();;
+    private ArrayList<Road> roads = new ArrayList<>();;
     private double delay;
-    private String vehicleType;
-    Route(){
-        junctions = new ArrayList<>();
-        roads = new ArrayList<>();
-    };
-    Route(ArrayList<Junction> juncs,ArrayList<Road> roads, String vehType){
-        junctions = new ArrayList<>();
-        this.roads = new ArrayList<>();
-        junctions = (ArrayList<Junction>) juncs.clone();
-        this.roads = (ArrayList<Road>) roads.clone();
+    private VehicleType vehicleType;
+
+    Route(ArrayList<Junction> juncs,ArrayList<Road> roads, VehicleType vehType){
+        junctions.addAll(juncs);
+        this.roads.addAll(roads);
         vehicleType = vehType;
     };
-    Route(Junction start, Junction end, String vehType){};
+
+    Route(Junction start, Junction end, VehicleType vehType){}; // not finish
 
     //Junction getStart(){};
     //Junction getEnd(){};
+
     double calcDelay(){ //not finish
         int length=0;
         for(Junction item: junctions)

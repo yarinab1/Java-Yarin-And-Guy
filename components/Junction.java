@@ -124,17 +124,28 @@ public class Junction {
 		if(enteringRoad.size() == J.enteringRoad.size() && exitingRoad.size() == J.exitingRoad.size() && vehicles.size() == J.vehicles.size())
 		{
 			for(int i=0;i<enteringRoad.size();i++)
-				if(!enteringRoad.get(i).equals(J.enteringRoad.get(i)))
+				if(!enteringRoad.get(i).equals(J.enteringRoad.get(i))){
 					roadsIsEqual = false;
-			for(int i=0;i<enteringRoad.size();i++)
-				if(!exitingRoad.get(i).equals(J.exitingRoad.get(i)))
-					roadsIsEqual = false;
-			for(int i=0;i<enteringRoad.size();i++)
-				if(!vehicles.get(i).equals(J.vehicles.get(i)))
-					roadsIsEqual = false;
-		}else roadsIsEqual = false;
+					break;
+				}
+			if(roadsIsEqual){
+				for(int i=0;i<enteringRoad.size();i++)
+					if(!exitingRoad.get(i).equals(J.exitingRoad.get(i))){
+						roadsIsEqual = false;
+						break;
+					}
+				if(roadsIsEqual)
+					for(int i=0;i<enteringRoad.size();i++)
+						if(!vehicles.get(i).equals(J.vehicles.get(i))){
+							roadsIsEqual = false;
+							break;
+						}
+			}
+		}else return false;
+
 		if(junctionName == J.junctionName && location.equals(J.location) && delay == J.delay && hasLight == J.hasLight && roadsIsEqual)
 			return true;
+	
 		return false;
 	};
 }

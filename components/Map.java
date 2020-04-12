@@ -18,7 +18,8 @@ public class Map {
      
         for(int i=0;i<10;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
-    } //Creates a map with 20 random junctions and connects all of them one to another with roads.
+    }; //Creates a map with 20 random junctions and connects all of them one to another with roads.
+
 
     public Map (int junctions, int roads){
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
@@ -40,7 +41,7 @@ public class Map {
 
             this.roads.add(new Road(this.junctions.get(rand.nextInt(tempIndex.get(0))), this.junctions.get(tempIndex.get(1))));
         }
-    } //Creates a random map with given quantity of junctions and roads.
+    }; //Creates a random map with given quantity of junctions and roads.
 
     public Map (ArrayList<Junction> juncs){
         junctions = juncs;
@@ -49,22 +50,30 @@ public class Map {
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
         if(junctions.size()%2!=0)
             roads.add(new Road(junctions.get(junctions.size()/2), junctions.get((junctions.size()/2)+1)));
-    }
+    };
 
     public Map (ArrayList<Junction>juncs, ArrayList<Road>roads){
-        junctions = juncs;
-        this.roads = roads;
-    }
-    
+        junctions.addAll(juncs);
+        this.roads.addAll(roads);
+    };
+
     public Map(int numOfJunc)
     {
-    	Random rand = new Random();
-    	String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
-    			,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
-    	for(int i=0;i<numOfJunc;i++)
-    	{
-    		this.junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble())));
-    	}
+        Random rand = new Random();
+        String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
+                ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
+        for(int i=0;i<numOfJunc;i++)
+            junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble())));
+        
+            //roads add
+        for(int i=0;i<numOfJunc/2;i++)
+            roads.add(new Road(junctions.get(i), junctions.get(i+1)));
+        if(numOfJunc%2!=0)
+            roads.add(new Road(junctions.get(junctions.size()/2), junctions.get((junctions.size()/2)+1)));
+    }
+
+    public ArrayList<Junction> getJunctions() {
+        return junctions;
     }
 
     public void addRoad(Road r){ roads.add(r); };
@@ -78,16 +87,28 @@ public class Map {
                 removeRoad(item);
         }
 
-        /*for(Road item:roads)
-            if(((Junction) item.getFromJunc()).equals(junc))
-            {
-                Random rand = new Random();
-                item.setFromJunc(junctions.get(rand.nextInt(junctions.size())));
-            }else if(((Junction) item.getToJunc()).equals(junc))
-            {
-                Random rand = new Random();
-                item.setToJunc(junctions.get(rand.nextInt(junctions.size())));
-            }//To save the roads but chang the removed junction (guidance is unclear)*/
-            
     }; //removes the junction and all connected to it roads from the map.
+
+    public boolean equals(Map M) {
+        boolean junctionsAndRoadsEquals = true;
+        if(junctions.size() == M.junctions.size())
+		{
+			for(int i=0;i<junctions.size();i++)
+				if(!junctions.get(i).equals(M.junctions.get(i))){
+                junctionsAndRoadsEquals = false;
+                break;
+            }
+        }else junctionsAndRoadsEquals = false;
+        
+        if(roads.size() == M.roads.size() && junctionsAndRoadsEquals)
+		{
+			for(int i=0;i<roads.size();i++)
+				if(!roads.get(i).equals(M.roads.get(i))){
+                    junctionsAndRoadsEquals = false;
+                    break;
+                }
+        }else return false;
+
+        return junctionsAndRoadsEquals;
+    }
 }
