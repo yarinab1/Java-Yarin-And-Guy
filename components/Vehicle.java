@@ -8,12 +8,13 @@ public class Vehicle{
 	private Junction lastJunction;//current junction or last junction where the vehicle visited.
 	private Road lastRoad;
 	private boolean moveNow;//True if the vehicle is on the road between the junctions.
-	private double spentTime;//time passed from the beginning of movement on the route.
+	private double spentTime = 0;//time passed from the beginning of movement on the route.
 
 	public Vehicle(int id,VehicleType type,Junction lastJunction){
 		this.id = id;
 		this.type = type;
 		this.lastJunction = lastJunction;
+		speed = type.getSpeed();
 	}
 
 	// getters
@@ -53,13 +54,14 @@ public class Vehicle{
 	public void setSpentTime(double spentTime) { this.spentTime = spentTime; }
 
 	// others
-	void move(){} // wait for the current point delay time and move to the next point of the route.
-	void status(){} //prints the details about the vehicle including current
-					//position, time spent on the route and the first and last junctions
-					//on the route.
+	void move(){System.out.println("Waiting " + lastJunction.getDelay() + " seconds.");} // wait for the current point delay time and move to the next point of the route.(for now just print delay time)
+
+	void status(){
+		System.out.println("Vehicle details: "+type.toString() + "\ncurrent position: "+ lastJunction.getLocation().toString() +"\nThe time spent on the route is - " + spentTime
+						 +"First junction name: "+currentRoute.getStart().getJunctionName()+"\nLast junction name: " + currentRoute.getEnd().getJunctionName());
+	} //prints the details about the vehicle including current position, time spent on the route and the first and last junctions on the route.
+
 	void checkIn(){
-		
-	}//if arrived to a junction, update the junction waiting list
-					//and calculate the delay time before the next move.
-	
+		currentRoute.calcDelay();
+	}//if arrived to a junction, update the junction waiting list and calculate the delay time before the next move.
 }
