@@ -9,7 +9,7 @@ public class VehicleType {
     }
 
     public String toString() {
-        return "Typename: " + typeName + ", Speed: "+speed;
+        return "Type name - " + typeName + ", Speed - "+speed;
     }
     
     public boolean equals(VehicleType V){
@@ -17,5 +17,9 @@ public class VehicleType {
             return true;
         return false;
     };
+
+    public int getSpeed() {
+        return speed;
+    }
 
 }

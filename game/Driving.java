@@ -90,7 +90,7 @@ public class Driving {
             currentVehicles.add(new Vehicle(i,tampJVehicleTypes.get(rand.nextInt(tampJVehicleTypes.size())),tempJunction));
         }
     } 
-    public void startDrive(int maxTime){}
+    public void startDrive(int maxTime){}//TODO:
     
     public String toString() {
         return "There is " + numOfJuncs + " junctions and " + numOfVehicles + " vehicles at this Driving";

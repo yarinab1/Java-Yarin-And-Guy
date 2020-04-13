@@ -9,17 +9,15 @@ public class Map {
     private ArrayList<Road> roads = new ArrayList<>();;
     
     public Map(){
-        Random rand = new Random();
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
                                 ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};// 20 names of junctions
         
         for(String item:namesOfJancs)
-            junctions.add(new Junction(item,new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble()))); //add junction with the next name and with location point(double 0<x<1000000,double 0<y<800)
+            junctions.add(new Junction(item,new Point())); //add junction with the next name and with location point(double 0<x<1000000,double 0<y<800)
      
         for(int i=0;i<10;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
     }; //Creates a map with 20 random junctions and connects all of them one to another with roads.
-
 
     public Map (int junctions, int roads){
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
@@ -27,7 +25,7 @@ public class Map {
         
         Random rand = new Random();
         for(int i=0;i<junctions;i++)
-            this.junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble()))); //add junction with the next name and with location point(double 0<x<1000000,double 0<y<800)
+            this.junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point())); //add junction with the next name and with location point(double 0<x<1000000,double 0<y<800)
         
         ArrayList<ArrayList<Integer>> randIndexOfJuncs = new ArrayList<>();
         for(int i = 0; i<roads;i++)
@@ -59,11 +57,10 @@ public class Map {
 
     public Map(int numOfJunc)
     {
-        Random rand = new Random();
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
                 ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
         for(int i=0;i<numOfJunc;i++)
-            junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point(rand.nextInt(999999) + rand.nextDouble(),rand.nextInt(799) + rand.nextDouble())));
+            junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point()));
         
             //roads add
         for(int i=0;i<numOfJunc/2;i++)
@@ -82,11 +79,8 @@ public class Map {
     public void removeJunction(Junction junc){
         junctions.remove(junc);
         for(Road item: roads)
-        {
-            if(((Junction) item.getFromJunc()).equals(junc))
+            if(((Junction) item.getFromJunc()).equals(junc) || ((Junction) item.getToJunc()).equals(junc))
                 removeRoad(item);
-        }
-
     }; //removes the junction and all connected to it roads from the map.
 
     public boolean equals(Map M) {
