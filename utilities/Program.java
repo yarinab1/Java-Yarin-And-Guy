@@ -1,71 +1,46 @@
 /**
  *
  */
+
+ 
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package utilities;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import components.Junction;
+import components.Map;
 import components.Road;
 import components.VehicleType;
+import game.Driving;
+import components.Route;
 
 /**
  * @author krsof
  *
  */
 public class Program {
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        testJunction();
-    }
-
-    public static void testJunction() {
-		Junction arr[]=new Junction[10];
-		for (int i=0;i<10;i++) {
-			arr[i]=new Junction(new String("" +i),new Point(-1,-1));
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		Map map=new Map(5);
+		map.addJunction(new Junction("Test", new Point(5,10)));
+		System.out.println(map.getJunctions());
+		map.removeJunction(map.getJunctions().get(5));
+		System.out.println(map.getJunctions());
+		
+		Driving d=new Driving(5,4,20);
+		System.out.println(d.getVehicles());
+		d.addVehicles();
+		System.out.println(d.getVehicles());
+		System.out.println();
+		
+		for(int i=0;i<d.getVehicles().size();i++) {
+			d.getVehicles().get(i).move();
 		}
-		
-		Road arrR[]=new Road[30];
-		for (int i=0;i<arrR.length;i++){
-			int j=new Random().nextInt(arr.length);
-			int k=new Random().nextInt(arr.length);
-			if (!arr[j].equals(arr[k])) {
-				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomVehicleTypes(), false,true);
-				System.out.println(arrR[i].toString() + " has been created");
-			}
-			else i--;
-			
-		}
-		
-		for (int i=0;i<arr.length;i++) {
-			System.out.println(arr[i].toString() + ": EXITING ROADS:");
-			for (int j=0; j<arr[i].getExitingRoads().size(); j++) {
-				System.out.println(arr[i].getExitingRoads().get(j).toString());
-			}
-			System.out.println(arr[i].toString() + ": ENTERING ROADS:");
-			for (int j=0; j<arr[i].getEnteringRoads().size(); j++) {
-				System.out.println(arr[i].getEnteringRoads().get(j).toString());
-			}
-		}
-		
-		
-		for (int i=0; i<arr.length; i++) {
-			
-			System.out.println(arr[i].toString() + " LIGHTS CHECK");
-			arr[i].setLightsOn();
-			for (int j=0; j<5;j++) {
-				arr[j].changeLights();
-			}
-		}
-		
-		for (int i=0; i<arrR.length;i++) {
-			System.out.println(arrR[i].toString() + ": " + arrR[i].getAllowedVehicles() + " lenth: " + arrR[i].getLength() + " Max Speed: " + arrR[i].getMaxSpeed());
-		}
-		
-		
 	}
 }

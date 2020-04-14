@@ -1,22 +1,27 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 import java.util.ArrayList;
-class Route{
+public class Route{
     private ArrayList<Junction> junctions = new ArrayList<>();;
     private ArrayList<Road> roads = new ArrayList<>();;
     private double delay;
     private VehicleType vehicleType;
 
-    Route(ArrayList<Junction> juncs,ArrayList<Road> roads, VehicleType vehType){
+    public Route(ArrayList<Junction> juncs,ArrayList<Road> roads, VehicleType vehType){
         junctions.addAll(juncs);
         this.roads.addAll(roads);
         vehicleType = vehType;
         calcDelay();
     };
 
-    Route(Junction start, Junction end, VehicleType vehType){}; // not implemented in this task.
+    public Route(Junction start, Junction end, VehicleType vehType){}; // not implemented in this task.
     
-    Junction getStart(){return junctions.get(0);};
-    Junction getEnd(){return junctions.get(junctions.size()-1);};
+    public Junction getStart(){return junctions.get(0);};
+    public Junction getEnd(){return junctions.get(junctions.size()-1);};
+    public double getDelay() { return delay; }
+    public ArrayList<Junction> getJunctions() { return junctions;}
 
     public void calcDelay()
      /*(1) set length to be a sum of delay values of all the junctions
@@ -55,11 +60,6 @@ class Route{
         delay = length;
     };
 
-    public double getDelay() {
-        return delay;
-    }
-
-    public ArrayList<Junction> getJunctions() {
-        return junctions;
-    }
+    public void printRoute(){System.out.println(getStart() + "," + roads.get(0) + "," + getEnd() + "," + roads.get(roads.size()-1));} //TODO: fix the route and then print here the all route 
+    
 }

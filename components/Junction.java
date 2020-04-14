@@ -1,3 +1,6 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class Junction {
 		
 		Random rand = new Random();
 		delay = 1 + rand.nextInt(10);
-		System.out.println(toString() + " has been created.");
+		System.out.println("Junction " + junctionName + " has been created.");
 	}
 
 	public double getX() {
@@ -71,7 +74,12 @@ public class Junction {
 		this.hasLight = hasLight;
 	}
 
-	public void setLightsOn(){ setHasLight(true); }
+	public void setLightsOn(){ 
+		for(Road item:enteringRoads)
+			item.setLight(true);
+		for(Road item:exitingRoads)
+			item.setLight(true);
+	 }
 
 	public int getNextEnterRoad() {
 		return nextEnterRoad;
@@ -99,14 +107,16 @@ public class Junction {
 	
 	public void changeLights()//make the next entering road in the list green (open) and all the others (exiting only) red (closed).
 	{
-		enteringRoads.get(nextEnterRoad).setLight(true);
-		for(int i=0;i<exitingRoads.size();i++)
-				exitingRoads.get(i).setLight(false);
-				
-		if(nextEnterRoad + 1 < enteringRoads.size())
-			nextEnterRoad++;
-		else
-			nextEnterRoad = 0;
+		if(!enteringRoads.isEmpty()){
+			enteringRoads.get(nextEnterRoad).setLight(true);
+			for(int i=0;i<exitingRoads.size();i++)
+					exitingRoads.get(i).setLight(false);
+					
+			if(nextEnterRoad + 1 < enteringRoads.size())
+				nextEnterRoad++;
+			else
+				nextEnterRoad = 0;
+		}else System.out.println("Junction "+ junctionName +": No entering roads, traffic lights can't be turned on.");
 	}
 
 	public boolean checkAvailability(Road r){ //make the next entering road in the list green (open)and all the others (exiting only) red (closed).
@@ -122,7 +132,9 @@ public class Junction {
 	
 	public String toString()
 	{
-		return "Junction " + junctionName;
+		if(getHasLight())
+			return "Junction " + junctionName+ ": traffic lights ON. Delay time: " + delay ;
+		else return "Junction " + junctionName+ ": traffic lights OFF Delay time: " + delay ;
 	}
 
 	public boolean equals(Junction J){
