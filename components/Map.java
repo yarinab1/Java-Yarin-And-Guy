@@ -1,3 +1,6 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 import java.util.ArrayList;
 import java.util.Random;
@@ -72,7 +75,8 @@ public class Map {
     public ArrayList<Junction> getJunctions() {
         return junctions;
     }
-
+   
+    public ArrayList<Road> getRoads() { return roads; }
     public void addRoad(Road r){ roads.add(r); };
     public void removeRoad(Road r){ roads.remove(r);};
     public void addJunction(Junction junc){ junctions.add(junc);};

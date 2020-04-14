@@ -1,3 +1,6 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ public class VehicleType {
     }
 
     public String toString() {
-        return "Type name - " + typeName + ", Speed - "+speed;
+        return typeName + ", avarage speed: "+speed;
     }
     
     public boolean equals(VehicleType V){
@@ -22,9 +25,7 @@ public class VehicleType {
         return false;
     };
 
-    public int getSpeed() {
-        return speed;
-    }
+    public int getSpeed() { return speed; }
 
     public static ArrayList<VehicleType> getRandomVehicleTypes(){ 
         String[] vehiclesTypes = {"Truck","Motorcycle","Bikes","Private","Tricycle","Ambulance","jeep","SUV","Tractor"};

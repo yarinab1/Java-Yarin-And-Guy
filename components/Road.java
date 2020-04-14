@@ -1,3 +1,6 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 
 import java.lang.Math;
@@ -28,29 +31,32 @@ public class Road {
 		isOpen = rand.nextBoolean();
 		isEnabled = rand.nextBoolean();
 
-		maxSpeed = 10 * (rand.nextInt(12) + 1); // {10,20,30,40,50,60,70,80,90,100,110,120,130}
+		maxSpeed = 10 * (rand.nextInt(13) + 1); // {10,20,30,40,50,60,70,80,90,100,110,120,130}
 
 		length = countLength();
 
 		from.addExitingRoads(this);
 		to.addEnteringRoads(this);
 
-		System.out.println(toString() + " has been created.");
+		System.out.println("Road from "+ fromJunc.getJunctionName() +" to "+ toJunc.getJunctionName() + " has been created.");
 	}
 	
 	public Road(Junction from,Junction to, ArrayList<VehicleType> allowed,boolean open, boolean enabled)
 	{
+		Random rand = new Random();
+
 		fromJunc=from;
 		toJunc=to;
 		allowedVehicles.addAll(allowed);
 		isOpen=open;
 		isEnabled=enabled;
 		length = countLength();
+		maxSpeed = 10 * (rand.nextInt(12) + 1); // {10,20,30,40,50,60,70,80,90,100,110,120,130}
 
 		from.addExitingRoads(this);
 		to.addEnteringRoads(this);
 
-		System.out.println(toString() + " has been created.");
+		System.out.println("Road from "+ fromJunc.getJunctionName() +" to "+ toJunc.getJunctionName() + " has been created.");
 	}
 	
 	public Road(Road R){
@@ -86,7 +92,9 @@ public class Road {
 	
 	public String toString()
 	{
-		return "Road from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName();
+		if(isOpen)
+			return "Road from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName() + ": green light";
+		else return "Road from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName() + ": red light";
 	}
 
 	public boolean equals(Road R){

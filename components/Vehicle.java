@@ -1,3 +1,6 @@
+
+// Guy Cohen - 205579808, Yarin Abraham - 208401166
+
 package components;
 
 public class Vehicle{
@@ -54,14 +57,18 @@ public class Vehicle{
 	public void setSpentTime(double spentTime) { this.spentTime = spentTime; }
 
 	// others
-	void move(){System.out.println("Waiting " + lastJunction.getDelay() + " seconds.");} // wait for the current point delay time and move to the next point of the route.(for now just print delay time)
+	public void move(){System.out.println("Waiting " + lastJunction.getDelay() + " seconds.");} // wait for the current point delay time and move to the next point of the route.(for now just print delay time)
 
-	void status(){
+	public void status(){
 		System.out.println("Vehicle details: "+type.toString() + "\ncurrent position: "+ lastJunction.getLocation().toString() +"\nThe time spent on the route is - " + spentTime
 						 +"First junction name: "+currentRoute.getStart().getJunctionName()+"\nLast junction name: " + currentRoute.getEnd().getJunctionName());
 	} //prints the details about the vehicle including current position, time spent on the route and the first and last junctions on the route.
 
-	void checkIn(){
+	public void checkIn(){
 		currentRoute.calcDelay();
 	}//if arrived to a junction, update the junction waiting list and calculate the delay time before the next move.
+
+	public String toString() {
+		return type.toString() + ", " + id;
+	}
 }
