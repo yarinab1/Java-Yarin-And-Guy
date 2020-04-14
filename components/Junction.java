@@ -10,21 +10,19 @@ public class Junction {
 	private Point location;// location of the junction on the map
 	private int delay;// delay time in seconds
 	private boolean hasLight=false;// checks if the junction has traffic lights.
-	private ArrayList<Road> enteringRoads;// holds the list of the roads that enter to the junction.
-	private ArrayList<Road> exitingRoad;// holds the list of the roads that exitthe junction.
-	private ArrayList<Road> vehicles;//list of entering roads with cars waiting on the junction
+	private ArrayList<Road> enteringRoads = new ArrayList<>(); // holds the list of the roads that enter to the junction.
+	private ArrayList<Road> exitingRoads = new ArrayList<>(); // holds the list of the roads that exitthe junction.
+	private ArrayList<Road> vehicles = new ArrayList<>(); //list of entering roads with cars waiting on the junction
 	public int nextEnterRoad=0;
 	
 	public Junction (String name, Point loc)
 	{
 		junctionName=name;
 		location=loc;
-		if(enteringRoads.size() <= 10)
-			delay = enteringRoads.size();
-		else {
-			Random rand = new Random();
-			delay = 1 + rand.nextInt(10);
-		} 
+		
+		Random rand = new Random();
+		delay = 1 + rand.nextInt(10);
+		System.out.println(toString() + " has been created.");
 	}
 
 	public double getX() {
@@ -73,17 +71,17 @@ public class Junction {
 		this.hasLight = hasLight;
 	}
 
-	public void setLightsOn(){hasLight=true;}
+	public void setLightsOn(){ setHasLight(true); }
 
 	public int getNextEnterRoad() {
 		return nextEnterRoad;
 	}
 
-	public void getExitingRoads(ArrayList<Road> exitingRoad) {
-		this.exitingRoad = exitingRoad;
+	public void getExitingRoads(ArrayList<Road> exitingRoads) {
+		this.exitingRoads = exitingRoads;
 	}
 	public ArrayList<Road> getExitingRoads() {
-		return exitingRoad;
+		return exitingRoads;
 	}
 
 	public ArrayList<Road> getEnteringRoads() {
@@ -102,8 +100,8 @@ public class Junction {
 	public void changeLights()//make the next entering road in the list green (open) and all the others (exiting only) red (closed).
 	{
 		enteringRoads.get(nextEnterRoad).setLight(true);
-		for(int i=0;i<exitingRoad.size();i++)
-				exitingRoad.get(i).setLight(false);
+		for(int i=0;i<exitingRoads.size();i++)
+				exitingRoads.get(i).setLight(false);
 				
 		if(nextEnterRoad + 1 < enteringRoads.size())
 			nextEnterRoad++;
@@ -124,12 +122,12 @@ public class Junction {
 	
 	public String toString()
 	{
-		return "the Junction Name is: "+ junctionName +"\n";
+		return "Junction " + junctionName;
 	}
 
 	public boolean equals(Junction J){
 		boolean roadsIsEqual = true;
-		if(enteringRoads.size() == J.enteringRoads.size() && exitingRoad.size() == J.exitingRoad.size() && vehicles.size() == J.vehicles.size())
+		if(enteringRoads.size() == J.enteringRoads.size() && exitingRoads.size() == J.exitingRoads.size() && vehicles.size() == J.vehicles.size())
 		{
 			for(int i=0;i<enteringRoads.size();i++)
 				if(!enteringRoads.get(i).equals(J.enteringRoads.get(i))){
@@ -137,13 +135,13 @@ public class Junction {
 					break;
 				}
 			if(roadsIsEqual){
-				for(int i=0;i<enteringRoads.size();i++)
-					if(!exitingRoad.get(i).equals(J.exitingRoad.get(i))){
+				for(int i=0;i<exitingRoads.size();i++)
+					if(!exitingRoads.get(i).equals(J.exitingRoads.get(i))){
 						roadsIsEqual = false;
 						break;
 					}
 				if(roadsIsEqual)
-					for(int i=0;i<enteringRoads.size();i++)
+					for(int i=0;i<vehicles.size();i++)
 						if(!vehicles.get(i).equals(J.vehicles.get(i))){
 							roadsIsEqual = false;
 							break;
@@ -153,7 +151,10 @@ public class Junction {
 
 		if(junctionName == J.junctionName && location.equals(J.location) && delay == J.delay && hasLight == J.hasLight && roadsIsEqual)
 			return true;
-			
+		
 		return false;
 	};
+
+	public void addEnteringRoads(Road R){ enteringRoads.add(new Road(R)); }
+	public void addExitingRoads(Road R){ exitingRoads.add(new Road(R)); }
 }
