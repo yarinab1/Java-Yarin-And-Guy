@@ -33,7 +33,7 @@ class Route{
         for(Junction item: junctions) 
         {
             if(item.getHasLight())
-                length += item.getDelay()*item.getenteringRoads().size()-1; //4
+                length += item.getDelay()*item.getEnteringRoads().size()-1; //4
             else
                 {
                     for(int i=0;i<roads.size();i++)
@@ -46,8 +46,8 @@ class Route{
         double time=0;
         for(Road item: roads){ //3
             if(item.getMaxSpeed()<vehicleType.getSpeed())
-                time += item.getLenght()/item.getMaxSpeed();
-            else time += item.getLenght()/vehicleType.getSpeed();
+                time += item.getLength()/item.getMaxSpeed();
+            else time += item.getLength()/vehicleType.getSpeed();
         }
 
         length += time; //2

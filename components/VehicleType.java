@@ -1,4 +1,8 @@
 package components;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 public class VehicleType {
     private String typeName;
     private int speed; //average speed of vehicle type
@@ -20,6 +24,27 @@ public class VehicleType {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public static ArrayList<VehicleType> getRandomVehicleTypes(){ 
+        String[] vehiclesTypes = {"Truck","Motorcycle","Bikes","Private","Tricycle","Ambulance","jeep","SUV","Tractor"};
+        //make an random index list to take set an random allowedVehicles list
+        ArrayList<Integer> randIndex = new ArrayList<>();
+        ArrayList<VehicleType> allowedVehicles = new ArrayList<>();
+        Random rand = new Random();
+        int sizeOfRandIndex = rand.nextInt(vehiclesTypes.length)+1; // +1 to prevent 0
+        for(int i = 0; i<sizeOfRandIndex;i++)
+        {
+            int tempIndex;
+            do{
+                tempIndex = rand.nextInt(vehiclesTypes.length);
+            }while(randIndex.contains(tempIndex));
+
+            randIndex.add(tempIndex);
+        }
+        for(int i = 0; i<sizeOfRandIndex;i++)
+            allowedVehicles.add(new VehicleType(vehiclesTypes[randIndex.get(i)],10 * (rand.nextInt(12) + 6))); // 60 - 180 (average speed)
+        return allowedVehicles;
     }
 
 }

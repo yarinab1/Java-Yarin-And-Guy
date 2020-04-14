@@ -8,11 +8,11 @@ public class Road {
 	
 	private Junction fromJunc;
 	private Junction toJunc;
-	private ArrayList<VehicleType> allowedVehicles;// holds the list of vehicle types
+	private ArrayList<VehicleType> allowedVehicles = new ArrayList<>();// holds the list of vehicle types
 									 //that are allowed to move on the road.
 	private boolean isOpen;// True when the light is green.
 	private boolean isEnabled;//appears on the map
-	private double lenght;// the distance between the two junctions.
+	private double length;// the distance between the two junctions.
 	private int maxSpeed;
 
 	
@@ -20,30 +20,22 @@ public class Road {
 	{
 		fromJunc=from;
 		toJunc=to;
-		lenght = countLength();
+		length = countLength();
 		Random rand = new Random();
 
-		String[] vehiclesTypes = {"Truck","Motorcycle","Bikes","Private","Tricycle","Ambulance","jeep","SUV","Tractor"};
-		//make an random index list to take set an random allowedVehicles list
-		ArrayList<Integer> randIndex = new ArrayList<>();
-		int sizeOfRandIndex = rand.nextInt(vehiclesTypes.length)+1; // +1 to prevent 0
-		for(int i = 0; i<sizeOfRandIndex;i++)
-		{
-			int tempIndex;
-			do{
-				tempIndex = rand.nextInt(vehiclesTypes.length);
-			}while(randIndex.contains(tempIndex));
-
-			randIndex.add(tempIndex);
-		}
-		for(int i = 0; i<sizeOfRandIndex;i++)
-			allowedVehicles.add(new VehicleType(vehiclesTypes[randIndex.get(i)],10 * (rand.nextInt(12) + 6))); // 60 - 180 (average speed)
+		allowedVehicles = VehicleType.getRandomVehicleTypes();
 
 		isOpen = rand.nextBoolean();
 		isEnabled = rand.nextBoolean();
 
 		maxSpeed = 10 * (rand.nextInt(12) + 1); // {10,20,30,40,50,60,70,80,90,100,110,120,130}
-		
+
+		length = countLength();
+
+		from.addExitingRoads(this);
+		to.addEnteringRoads(this);
+
+		System.out.println(toString() + " has been created.");
 	}
 	
 	public Road(Junction from,Junction to, ArrayList<VehicleType> allowed,boolean open, boolean enabled)
@@ -53,42 +45,37 @@ public class Road {
 		allowedVehicles.addAll(allowed);
 		isOpen=open;
 		isEnabled=enabled;
-		lenght = countLength();
+		length = countLength();
+
+		from.addExitingRoads(this);
+		to.addEnteringRoads(this);
+
+		System.out.println(toString() + " has been created.");
 	}
 	
+	public Road(Road R){
+		fromJunc = R.fromJunc;
+		toJunc = R.toJunc;
+		allowedVehicles = R.allowedVehicles;
+		isOpen = R.isOpen;
+		isEnabled = R.isEnabled;
+		length = R.length;
+		maxSpeed = R.maxSpeed;
+	}//cctor
 	public boolean getLight() {return isOpen;}//check if the light is green or not
 	public boolean getAppears() {return isEnabled;}
-	public double getLenght() {return lenght;}
+	public double getLength() {return length;}
 	public int getMaxSpeed() {return maxSpeed;}
 	public Junction getFromJunc() {return fromJunc;}
 	public ArrayList<VehicleType> getAllowedVehicles() {return allowedVehicles;}
 	public Junction getToJunc() {return toJunc;}
 	
-	public void setFromJunc(Junction fromJunc) {
-		this.fromJunc = fromJunc;
-	}
-
-	public void setToJunc(Junction toJunc) {
-		this.toJunc = toJunc;
-	}
-
-	public void setLight(boolean TorF)//true or false
-	{
-		isOpen=TorF;
-	}
-	
-	public void setAppears(boolean TorF)//true or false
-	{
-		isEnabled=TorF;
-	}
-	public void setLenght(double len)
-	{
-		lenght=len;
-	}
-	public void setMaxSpeed (int max)
-	{
-		maxSpeed=max;
-	}
+	public void setFromJunc(Junction fromJunc) {this.fromJunc = fromJunc;}
+	public void setToJunc(Junction toJunc) {this.toJunc = toJunc;}
+	public void setLight(boolean TorF){ isOpen=TorF; }
+	public void setAppears(boolean TorF){ isEnabled=TorF; }
+	public void setLength(double len){ length=len; }
+	public void setMaxSpeed (int max){ maxSpeed=max; }
 
 	public void addVehicleType(VehicleType type) { allowedVehicles.add(type); }
 	
@@ -99,7 +86,7 @@ public class Road {
 	
 	public String toString()
 	{
-		return "The Road is from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName()+"\n";
+		return "Road from "+ fromJunc.getJunctionName()+" to "+toJunc.getJunctionName();
 	}
 
 	public boolean equals(Road R){
@@ -113,7 +100,13 @@ public class Road {
 				}
 		}else return false;
 
-		if(fromJunc.equals(R.fromJunc) && toJunc.equals(R.toJunc) && isAllowedVehiclesEquals && isOpen == R.isOpen && isEnabled == R.isEnabled && lenght == R.lenght && maxSpeed == R.maxSpeed)
+		if(fromJunc.getJunctionName() == R.fromJunc.getJunctionName()
+		&& toJunc.getJunctionName() == R.toJunc.getJunctionName() && 
+		isAllowedVehiclesEquals &&
+		 isOpen == R.isOpen && 
+		 isEnabled == R.isEnabled && 
+		 length == R.length && 
+		 maxSpeed == R.maxSpeed)
 			return true;
 		return false;
 	}; 

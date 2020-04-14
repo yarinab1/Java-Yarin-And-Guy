@@ -85,7 +85,7 @@ public class Driving {
 
 		for(int i = 0; i<numOfVehicles;i++){
             Junction tempJunction = mapJunctions.get(rand.nextInt(mapJunctions.size()));
-            ArrayList<Road> tempJRoads = tempJunction.getExitingRoad();
+            ArrayList<Road> tempJRoads = tempJunction.getExitingRoads();
             ArrayList<VehicleType> tampJVehicleTypes = tempJRoads.get(rand.nextInt(tempJRoads.size())).getAllowedVehicles();
             currentVehicles.add(new Vehicle(i,tampJVehicleTypes.get(rand.nextInt(tampJVehicleTypes.size())),tempJunction));
         }
