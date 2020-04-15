@@ -10,11 +10,59 @@ public class Route{
     private VehicleType vehicleType;
 
     public Route(ArrayList<Junction> juncs,ArrayList<Road> roads, VehicleType vehType){
-        junctions.addAll(juncs);
-        this.roads.addAll(roads);
         vehicleType = vehType;
+        juncs.addAll(juncs);
+        this.roads.addAll(roads);
+        /*junctions.add(juncs.get(0));
+
+        ArrayList<Integer> indexList = new ArrayList<>();
+        indexList.addAll(getIndexListOfRoads(roads,juncs.get(0)));
+
+        for(Integer indexOfRoad : indexList)
+        {
+            for(int j = juncs.size()-1;j>=0;j--)
+                if(roads.get(indexOfRoad).getToJunc().equals(juncs.get(j))){
+                    this.roads.add(roads.get(indexOfRoad));
+                    juncs.add(juncs.get(j));
+                }
+        }*/
+
         calcDelay();
     };
+
+    public ArrayList<Integer> getIndexListOfRoads(ArrayList<Road> roads, Junction from){ //gets road that start from the same junction
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for(int i = 0;i < roads.size();i++)
+        {   
+            if(roads.get(i).getIsEnabled() && roads.get(i).getAllowedVehicles().contains(vehicleType)){
+                    if(roads.get(i).getFromJunc().equals(from)) //add all the roads that start from the wanted place
+                        indexList.add(i);
+            }
+        }
+        return indexList;
+    }
+
+    public boolean getIndexOfRoads(Road road, Junction from,Junction to){
+        if(road.getIsEnabled() && road.getAllowedVehicles().contains(vehicleType)){
+                if(road.getFromJunc().equals(from) && road.getToJunc().equals(to))
+                    return true;
+        }
+        return false;
+    }
+
+    public void addConnectedRoad(ArrayList<Integer> indexList, ArrayList<Junction> juncs){
+        for(Integer indexOfRoad : indexList)
+        {
+            for(int j = juncs.size()-1; j>=0; j--)
+                if(roads.get(indexOfRoad).getToJunc().equals(juncs.get(j))){
+                    this.roads.add(roads.get(indexOfRoad));
+                    junctions.add(juncs.get(j));
+                    return;
+                }
+        }
+    }
+
+    
 
     public Route(Junction start, Junction end, VehicleType vehType){}; // not implemented in this task.
     
