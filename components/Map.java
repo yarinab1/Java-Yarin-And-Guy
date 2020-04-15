@@ -33,29 +33,41 @@ public class Map {
         ArrayList<ArrayList<Integer>> randIndexOfJuncs = new ArrayList<>();
         for(int i = 0; i<roads;i++)
 		{
-			ArrayList<Integer> tempIndex = new ArrayList<>();
-			do{
-                tempIndex.add(rand.nextInt(junctions));
-                tempIndex.add(rand.nextInt(junctions));
-            }while(tempIndex.get(0) != tempIndex.get(0) && !randIndexOfJuncs.contains(tempIndex)); // Make sure there are no two repeating junctions (fromJunc,toJunc)
-            randIndexOfJuncs.add(tempIndex);
-
-            this.roads.add(new Road(this.junctions.get(rand.nextInt(tempIndex.get(0))), this.junctions.get(tempIndex.get(1))));
+                ArrayList<Integer> tempIndex = new ArrayList<>();
+                do{
+                    tempIndex.add(rand.nextInt(junctions));
+                    tempIndex.add(rand.nextInt(junctions));
+                }while(tempIndex.get(0) != tempIndex.get(1) && !randIndexOfJuncs.get(i).contains(tempIndex.get(0)) && !randIndexOfJuncs.get(i).contains(tempIndex.get(1))); // Make sure there are no two repeating junctions (fromJunc,toJunc)
+                randIndexOfJuncs.add(tempIndex);
+            
+                this.roads.add(new Road(this.junctions.get(tempIndex.get(0)), this.junctions.get(tempIndex.get(1))));
         }
+        if(roads<junctions/2)
+            for(Junction item: this.junctions){
+                if(item.getEnteringRoads().isEmpty())
+                    item.addEnteringRoads(this.roads.get(rand.nextInt(this.roads.size())));
+                if(item.getExitingRoads().isEmpty())
+                    item.addExitingRoads(this.roads.get(rand.nextInt(this.roads.size())));
+            }
     }; //Creates a random map with given quantity of junctions and roads.
 
     public Map (ArrayList<Junction> juncs){
-        junctions = juncs;
+        junctions.addAll(juncs);
         
-        for(int i=0;i<junctions.size()/2;i++)
+        for(int i=0;i<junctions.size()-1;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
-        if(junctions.size()%2!=0)
-            roads.add(new Road(junctions.get(junctions.size()/2), junctions.get((junctions.size()/2)+1)));
     };
 
     public Map (ArrayList<Junction>juncs, ArrayList<Road>roads){
+        Random rand = new Random();
         junctions.addAll(juncs);
         this.roads.addAll(roads);
+        for(Junction item: this.junctions){
+            if(item.getEnteringRoads().isEmpty())
+                item.addEnteringRoads(this.roads.get(rand.nextInt(this.roads.size())));
+            if(item.getExitingRoads().isEmpty())
+                item.addExitingRoads(this.roads.get(rand.nextInt(this.roads.size())));
+        }
     };
 
     public Map(int numOfJunc)

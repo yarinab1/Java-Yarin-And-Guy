@@ -69,7 +69,7 @@ public class Road {
 		maxSpeed = R.maxSpeed;
 	}//cctor
 	public boolean getLight() {return isOpen;}//check if the light is green or not
-	public boolean getAppears() {return isEnabled;}
+	public boolean getIsEnabled() {return isEnabled;}
 	public double getLength() {return length;}
 	public int getMaxSpeed() {return maxSpeed;}
 	public Junction getFromJunc() {return fromJunc;}

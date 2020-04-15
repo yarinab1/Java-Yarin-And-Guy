@@ -11,14 +11,14 @@ public class Driving {
     private int numOfVehicles;
     private Map currentMap;
     private ArrayList<Vehicle> currentVehicles = new ArrayList<>();
-    private double drivingTime;// time passed from the beginning of driving session
+    private double drivingTime = 0;// time passed from the beginning of driving session
     private int maxTime; // total round time
 
     public Driving(int juncs, int vehicles, int maxTime)
     {
         setNumOfJuncs(juncs);
         setNumOfVehicles(vehicles);
-        this.setMaxTime(maxTime);
+        setMaxTime(maxTime);
         currentMap = new Map();
     }
 
@@ -77,15 +77,11 @@ public class Driving {
         }
     } 
 
-    public ArrayList<Vehicle> getVehicles(){
-        /*ArrayList<String> allVehiclString = new ArrayList<>();
-        for(Vehicle item: currentVehicles)
-            allVehiclString.add(item.getType().toString() + ", " + item.getId());
-        return allVehiclString;*/
-        return currentVehicles;
-    }
+    public ArrayList<Vehicle> getVehicles(){ return currentVehicles; }
 
-    public void startDrive(int maxTime){}//TODO:
+    public void startDrive(int maxTime){
+        this.maxTime = maxTime;
+    }//TODO:
     
     public String toString() {
         return "There is " + numOfJuncs + " junctions and " + numOfVehicles + " vehicles at this Driving";
