@@ -1,4 +1,3 @@
-
 // Guy Cohen - 205579808, Yarin Abraham - 208401166
 
 package utilities;
@@ -37,6 +36,23 @@ public class Point {
 		System.out.println(toString() + " has been created.");
 	}
 	
+	public Point(Point loc) {//copy constructor
+		
+		if(loc.x >= 0 && loc.x <=limX) this.x=loc.x;
+		else{
+			Random rand = new Random();
+			this.x=rand.nextInt(limX) + rand.nextDouble();
+			System.out.println("The value " + x + " is illegal for X, therefore has been replaced with " + this.x);
+		}
+		if(loc.y >= 0 && loc.y <= limY) this.y=loc.y;
+		else{ 
+			Random rand = new Random();
+			this.y = rand.nextInt(limY) + rand.nextDouble();
+			System.out.println("The value " + y + " is illegal for Y, therefore has been replaced with " + this.y);
+		}
+		System.out.println(toString() + " has been created.");
+	}
+
 	public double getX() {
 		return x;
 	}
