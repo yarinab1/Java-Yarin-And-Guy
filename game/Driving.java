@@ -1,6 +1,3 @@
-
-// Guy Cohen - 205579808, Yarin Abraham - 208401166
-
 package game;
 import java.util.ArrayList;
 import components.*;
@@ -10,41 +7,64 @@ public class Driving {
     private int numOfJuncs;
     private int numOfVehicles;
     private Map currentMap;
-    private ArrayList<Vehicle> currentVehicles = new ArrayList<>();
-    private double drivingTime = 0;// time passed from the beginning of driving session
+    private ArrayList<Vehicle> currentVehicles;
+    private double drivingTime;// time passed from the beginning of driving session
     private int maxTime; // total round time
 
     public Driving(int juncs, int vehicles, int maxTime)
     {
         setNumOfJuncs(juncs);
         setNumOfVehicles(vehicles);
-        setMaxTime(maxTime);
-        currentMap = new Map();
+        this.setMaxTime(maxTime);
     }
 
-    public int getNumOfJuncs() { return numOfJuncs; }
+    public int getNumOfJuncs() {
+        return numOfJuncs;
+    }
 
-    public void setNumOfJuncs(int numOfJuncs) { this.numOfJuncs = numOfJuncs; }
+    public void setNumOfJuncs(int numOfJuncs) {
+        this.numOfJuncs = numOfJuncs;
+    }
 
-    public int getNumOfVehicles() { return numOfVehicles; }
+    public int getNumOfVehicles() {
+        return numOfVehicles;
+    }
 
-    public void setNumOfVehicles(int numOfVehicles) { this.numOfVehicles = numOfVehicles; }
+    public void setNumOfVehicles(int numOfVehicles) {
+        this.numOfVehicles = numOfVehicles;
+    }
 
-    public Map getCurrentMap() { return currentMap; }
+    public Map getCurrentMap() {
+        return currentMap;
+    }
 
-    public void setCurrentMap(Map currentMap) { this.currentMap = currentMap; }
+    public void setCurrentMap(Map currentMap) {
+        this.currentMap = currentMap;
+    }
 
-    public ArrayList<Vehicle> getCurrentVehicles() { return currentVehicles; }
+    public ArrayList<Vehicle> getCurrentVehicles() {
+        return currentVehicles;
+    }
 
-    public void setCurrentVehicles(ArrayList<Vehicle> currentVehicles) { this.currentVehicles = currentVehicles; }
+    public void setCurrentVehicles(ArrayList<Vehicle> currentVehicles) {
+        this.currentVehicles = currentVehicles;
+    }
 
-    public double getDrivingTime() { return drivingTime; }
+    public double getDrivingTime() {
+        return drivingTime;
+    }
 
-    public void setDrivingTime(double drivingTime) { this.drivingTime = drivingTime; }
+    public void setDrivingTime(double drivingTime) {
+        this.drivingTime = drivingTime;
+    }
 
-    public int getMaxTime() { return maxTime; }
+    public int getMaxTime() {
+        return maxTime;
+    }
 
-    public void setMaxTime(int maxTime) { this.maxTime = maxTime; }
+    public void setMaxTime(int maxTime) {
+        this.maxTime = maxTime;
+    }
 
 
     public void addMap()//creates a map with random (10-25) junctions quantity.
@@ -61,27 +81,42 @@ public class Driving {
 
 		//make an random index list to take set an random allowedVehicles list
         ArrayList<Junction> mapJunctions = new ArrayList<>();
-        mapJunctions.addAll(currentMap.getJunctions());
+        mapJunctions = currentMap.getJunctions();
 
 		for(int i = 0; i<numOfVehicles;i++){
-            ArrayList<Road> tempJRoads = new ArrayList<>();
-            ArrayList<VehicleType> tampJVehicleTypes = new ArrayList<>();
             Junction tempJunction = mapJunctions.get(rand.nextInt(mapJunctions.size()));
-            tempJRoads.addAll(tempJunction.getExitingRoads());
-            tempJRoads.addAll(tempJunction.getEnteringRoads());
-            if(!tempJRoads.isEmpty())
-                tampJVehicleTypes.addAll(tempJRoads.get(rand.nextInt((tempJRoads.size()/2)+1)).getAllowedVehicles());
-            else
-                tampJVehicleTypes.addAll(VehicleType.getRandomVehicleTypes());
+            ArrayList<Road> tempJRoads = tempJunction.getExitingRoads();
+            ArrayList<VehicleType> tampJVehicleTypes = tempJRoads.get(rand.nextInt(tempJRoads.size())).getAllowedVehicles();
             currentVehicles.add(new Vehicle(i,tampJVehicleTypes.get(rand.nextInt(tampJVehicleTypes.size())),tempJunction));
         }
     } 
-
-    public ArrayList<Vehicle> getVehicles(){ return currentVehicles; }
-
-    public void startDrive(int maxTime){
-        this.maxTime = maxTime;
-    }//TODO:
+    public void startDrive(int maxTime)
+    {
+    	for(int i=0;i<maxTime;i++)
+    	{
+    		for(int j=0;i<numOfVehicles;j++)
+    		{
+    			currentVehicles.get(j).move();
+    		}
+    		ArrayList<String> Roads =new ArrayList<>();
+    		for(int h=0;h<currentVehicles.size();h++)
+    		{
+    			currentVehicles.get(h).getLastJunction().changeLights();
+    			for(int y=0;y<currentVehicles.get(h).getLastJunction().getVehicles().size();y++)
+    			{
+    				if(currentVehicles.get(h).getLastJunction().getVehicles().get(y).getLight()&& !Roads.contains(currentVehicles.get(h).getLastJunction().getVehicles().get(y).toString()))
+    				{
+    					System.out.println(currentVehicles.get(h).getLastJunction().getVehicles().get(y)+ " -Green Light ");
+    					Roads.add(currentVehicles.get(h).getLastJunction().getVehicles().get(y).toString());
+    				}
+    			}
+    		}
+    	}
+    	for(int i=0;i<currentVehicles.size();i++)
+    	{
+    		currentVehicles.get(i).status();
+    	}
+    }
     
     public String toString() {
         return "There is " + numOfJuncs + " junctions and " + numOfVehicles + " vehicles at this Driving";
