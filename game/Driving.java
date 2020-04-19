@@ -16,6 +16,9 @@ public class Driving {
         setNumOfJuncs(juncs);
         setNumOfVehicles(vehicles);
         this.setMaxTime(maxTime);
+		addMap();
+		addVehicles();
+
     }
 
     public int getNumOfJuncs() {
@@ -86,8 +89,8 @@ public class Driving {
 		for(int i = 0; i<numOfVehicles;i++){
             Junction tempJunction = mapJunctions.get(rand.nextInt(mapJunctions.size()));
             ArrayList<Road> tempJRoads = tempJunction.getExitingRoads();
-            ArrayList<VehicleType> tampJVehicleTypes = tempJRoads.get(rand.nextInt(tempJRoads.size())).getAllowedVehicles();
-            currentVehicles.add(new Vehicle(i,tampJVehicleTypes.get(rand.nextInt(tampJVehicleTypes.size())),tempJunction));
+            ArrayList<VehicleType> tampJVehicleTypes = tempJRoads.get(rand.nextInt(tempJRoads.size()-1)).getAllowedVehicles();
+            currentVehicles.add(new Vehicle(i,tampJVehicleTypes.get(rand.nextInt(tampJVehicleTypes.size()-1)),tempJunction));
         }
     } 
     public void startDrive(int maxTime)
