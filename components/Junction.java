@@ -21,7 +21,7 @@ public class Junction {
 	public Junction (String name, Point loc)
 	{
 		junctionName=name;
-		location=loc;
+		location= new Point(loc);
 		
 		Random rand = new Random();
 		delay = 1 + rand.nextInt(10);
@@ -85,7 +85,7 @@ public class Junction {
 		return nextEnterRoad;
 	}
 
-	public void getExitingRoads(ArrayList<Road> exitingRoads) {
+	public void setExitingRoads(ArrayList<Road> exitingRoads) {
 		this.exitingRoads = exitingRoads;
 	}
 	public ArrayList<Road> getExitingRoads() {
@@ -95,7 +95,7 @@ public class Junction {
 	public ArrayList<Road> getEnteringRoads() {
 		return enteringRoads;
 	}
-	public void setenteringRoads(ArrayList<Road> enteringRoads) {
+	public void setEnteringRoads(ArrayList<Road> enteringRoads) {
 		this.enteringRoads = enteringRoads;
 	}
 	public ArrayList<Road> getVehicles() {
@@ -105,10 +105,11 @@ public class Junction {
 		this.vehicles = vehicles;
 	}
 	
-	public void changeLights()//make the next entering road in the list green (open) and all the others (exiting only) red (closed).
+	public void changeLights() // make the next entering road in the list green (open) and all the others (exiting only) red (closed).
 	{
 		if(!enteringRoads.isEmpty()){
 			enteringRoads.get(nextEnterRoad).setLight(true);
+			
 			for(int i=0;i<exitingRoads.size();i++)
 					exitingRoads.get(i).setLight(false);
 					
@@ -116,18 +117,16 @@ public class Junction {
 				nextEnterRoad++;
 			else
 				nextEnterRoad = 0;
-		}else System.out.println("Junction "+ junctionName +": No entering roads, traffic lights can't be turned on.");
+		}//else System.out.println("Junction "+ junctionName +": No entering roads, traffic lights can't be turned on."); // for junction sample
 	}
 
-	public boolean checkAvailability(Road r){ //make the next entering road in the list green (open)and all the others (exiting only) red (closed).
-		if(hasLight)
-			if(r.getLight() == true)
-				return false;
-			else
-				return true;
-		else if(vehicles.indexOf(r) == 0)
-			return false;
-		else return true;
+	public boolean checkAvailability(Road r){ //for vehicle that arrived to the junction from road r, checks if there are some other vehicles on the roads with a higher traffic priority on the junction.
+		if(!vehicles.isEmpty() && vehicles.get(0).equals(r))
+			for(int i=0; i<vehicles.size();i++)
+				if(vehicles.get(i).getIsEnabled() && getHasLight() && i < vehicles.indexOf(r))
+					return true;
+		
+		return false;
 	}
 	
 	public String toString()
@@ -167,6 +166,18 @@ public class Junction {
 		return false;
 	};
 
-	public void addEnteringRoads(Road R){ enteringRoads.add(new Road(R)); }
-	public void addExitingRoads(Road R){ exitingRoads.add(new Road(R)); }
+	public void addEnteringRoads(Road R){ 
+		enteringRoads.add(R); 
+		Random rand = new Random();
+		nextEnterRoad =rand.nextInt(enteringRoads.size());
+	}
+	public void addExitingRoads(Road R){ exitingRoads.add(R); }
+	public void addToVehicles(Road R){ vehicles.add(R); }
+	public void removefromVehicles(Road R){ vehicles.remove(R); }
+
+	public void printOpenRoads(){
+		for(int i = 0;i < enteringRoads.size() ; i++)
+			if(enteringRoads.get(i).getLight()) 
+				System.out.println(enteringRoads.get(i));
+	}
 }

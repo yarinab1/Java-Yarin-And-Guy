@@ -75,13 +75,13 @@ public class Map {
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
                 ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
         for(int i=0;i<numOfJunc;i++)
-            junctions.add(new Junction(namesOfJancs[i]+ String.valueOf(i),new Point()));
+            junctions.add(new Junction(""+i /*namesOfJancs[i%20]+ String.valueOf(i)*/,new Point()));
         
-            //roads add
-        for(int i=0;i<numOfJunc/2;i++)
-            roads.add(new Road(junctions.get(i), junctions.get(i+1)));
-        if(numOfJunc%2!=0)
-            roads.add(new Road(junctions.get(junctions.size()/2), junctions.get((junctions.size()/2)+1)));
+        //roads add
+        for(int i=0;i<numOfJunc;i++)
+            for(int j=0;j<numOfJunc;j++)
+                if(i!=j)
+                    roads.add(new Road(junctions.get(i), junctions.get(j)));
     }
 
     public ArrayList<Junction> getJunctions() {
