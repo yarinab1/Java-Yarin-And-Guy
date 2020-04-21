@@ -20,8 +20,8 @@ public class Driving {
         setNumOfJuncs(juncs);
         setNumOfVehicles(vehicles);
         this.setMaxTime(maxTime);
-		addMapAs();
-		addVehiclesAs();
+		    addMapAs();
+		    addVehiclesAs();
     }
 
     public int getNumOfJuncs() {
@@ -170,6 +170,7 @@ public class Driving {
     		for(int j=0;j<numOfVehicles;j++)
                 currentVehicles.get(j).move();
                 
+
     		ArrayList<String> Roads = new ArrayList<>();
     		for(int h=0;h<currentVehicles.size();h++)
     		{
