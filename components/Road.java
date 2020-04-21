@@ -11,8 +11,7 @@ public class Road {
 	
 	private Junction fromJunc;
 	private Junction toJunc;
-	private ArrayList<VehicleType> allowedVehicles = new ArrayList<>();// holds the list of vehicle types
-									 //that are allowed to move on the road.
+	private ArrayList<VehicleType> allowedVehicles = new ArrayList<>();// holds the list of vehicle types that are allowed to move on the road.
 	private boolean isOpen;// True when the light is green.
 	private boolean isEnabled;//appears on the map
 	private double length;// the distance between the two junctions.
@@ -26,7 +25,7 @@ public class Road {
 		length = countLength();
 		Random rand = new Random();
 
-		allowedVehicles = VehicleType.getRandomVehicleTypes();
+		setAllowedVehiclesFrom();
 
 		isOpen = rand.nextBoolean();
 		isEnabled = rand.nextBoolean();
@@ -39,6 +38,11 @@ public class Road {
 		to.addEnteringRoads(this);
 
 		System.out.println("Road from "+ fromJunc.getJunctionName() +" to "+ toJunc.getJunctionName() + " has been created.");
+
+		if(isOpen){
+			to.setHasLight(true);
+			System.out.println(to + "\n" + this);
+		}
 	}
 	
 	public Road(Junction from,Junction to, ArrayList<VehicleType> allowed,boolean open, boolean enabled)
@@ -57,6 +61,11 @@ public class Road {
 		to.addEnteringRoads(this);
 
 		System.out.println("Road from "+ fromJunc.getJunctionName() +" to "+ toJunc.getJunctionName() + " has been created.");
+
+		if(isOpen){
+			to.setHasLight(true);
+			System.out.println(to + "\n" + this);
+		}
 	}
 	
 	public Road(Road R){
@@ -68,6 +77,7 @@ public class Road {
 		length = R.length;
 		maxSpeed = R.maxSpeed;
 	}//cctor
+	
 	public boolean getLight() {return isOpen;}//check if the light is green or not
 	public boolean getIsEnabled() {return isEnabled;}
 	public double getLength() {return length;}
@@ -98,24 +108,41 @@ public class Road {
 	}
 
 	public boolean equals(Road R){
+		if(this!=null && R!=null){
 		boolean isAllowedVehiclesEquals = true;
-		if(allowedVehicles.size() == R.allowedVehicles.size())
-		{
-			for(int i=0;i<allowedVehicles.size();i++)
-				if(!allowedVehicles.get(i).equals(R.allowedVehicles.get(i))){
-					isAllowedVehiclesEquals = false;
-					break;
-				}
-		}else return false;
+			if(allowedVehicles.size() == R.allowedVehicles.size())
+			{
+				for(int i=0;i<allowedVehicles.size();i++)
+					if(!allowedVehicles.get(i).equals(R.allowedVehicles.get(i))){
+						isAllowedVehiclesEquals = false;
+						break;
+					}
+			}else return false;
 
-		if(fromJunc.getJunctionName() == R.fromJunc.getJunctionName()
-		&& toJunc.getJunctionName() == R.toJunc.getJunctionName() && 
-		isAllowedVehiclesEquals &&
-		 isOpen == R.isOpen && 
-		 isEnabled == R.isEnabled && 
-		 length == R.length && 
-		 maxSpeed == R.maxSpeed)
-			return true;
+			if(fromJunc.getJunctionName() == R.fromJunc.getJunctionName() && toJunc.getJunctionName() == R.toJunc.getJunctionName() 
+						&& isAllowedVehiclesEquals &&isOpen == R.isOpen && isEnabled == R.isEnabled && length == R.length && maxSpeed == R.maxSpeed)
+				return true;
+		}
 		return false;
 	}; 
+
+	public void setAllowedVehicles(ArrayList<VehicleType> allowedVehicles) { this.allowedVehicles = allowedVehicles; }
+
+	public void setAllowedVehiclesFrom(){ //set a a random anount of AllowedVehicles from an random array of vehicle types
+			//make an random index list to take set an random allowedVehicles list
+			ArrayList<Integer> randIndex = new ArrayList<>();
+			Random rand = new Random();
+			int sizeOfRandIndex = rand.nextInt(VehicleType.getRandomVehicleTypes().size())+1; // +1 to prevent 0
+			for(int i = 0; i<sizeOfRandIndex;i++)
+			{
+				int tempIndex;
+				do{
+					tempIndex = rand.nextInt(VehicleType.getRandomVehicleTypes().size());
+				}while(randIndex.contains(tempIndex));
+	
+				randIndex.add(tempIndex);
+			}
+			for(int i = 0; i<sizeOfRandIndex;i++)
+				allowedVehicles.add(VehicleType.getRandomVehicleTypes().get(randIndex.get(i))); // 40 - 130 (average speed)
+		}
 }

@@ -11,21 +11,8 @@ public class Route{
 
     public Route(ArrayList<Junction> juncs,ArrayList<Road> roads, VehicleType vehType){
         vehicleType = vehType;
-        juncs.addAll(juncs);
+        junctions.addAll(juncs);
         this.roads.addAll(roads);
-        /*junctions.add(juncs.get(0));
-
-        ArrayList<Integer> indexList = new ArrayList<>();
-        indexList.addAll(getIndexListOfRoads(roads,juncs.get(0)));
-
-        for(Integer indexOfRoad : indexList)
-        {
-            for(int j = juncs.size()-1;j>=0;j--)
-                if(roads.get(indexOfRoad).getToJunc().equals(juncs.get(j))){
-                    this.roads.add(roads.get(indexOfRoad));
-                    juncs.add(juncs.get(j));
-                }
-        }*/
 
         calcDelay();
     };
@@ -70,6 +57,7 @@ public class Route{
     public Junction getEnd(){return junctions.get(junctions.size()-1);};
     public double getDelay() { return delay; }
     public ArrayList<Junction> getJunctions() { return junctions;}
+    public ArrayList<Road> getRoads() { return roads; }
 
     public void calcDelay()
      /*(1) set length to be a sum of delay values of all the junctions
@@ -108,6 +96,19 @@ public class Route{
         delay = length;
     };
 
-    public void printRoute(){System.out.println(getStart() + "," + roads.get(0) + "," + getEnd() + "," + roads.get(roads.size()-1));} //TODO: fix the route and then print here the all route 
+    public void printRoute(){
+        //for(Road itemRoad: roads)
+
+        System.out.println(getStart() + "," + roads.get(0) + "," + getEnd() + "," + roads.get(roads.size()-1));
+    } //TODO: fix the route and then print here the all route 
+
+    public Road getNextRoad(Road R){
+        for(int i=0; i< roads.size(); i++)
+            {
+                if(roads.get(i).equals(R) && i < roads.size()-1)
+                    return roads.get(i+1);
+            }
+        return R;
+    }
     
 }
