@@ -17,7 +17,7 @@ public class Road {
 	private double length;// the distance between the two junctions.
 	private int maxSpeed;
 
-	
+	//Road constructor
 	public Road(Junction from,Junction to)
 	{
 		fromJunc=from;
@@ -44,7 +44,7 @@ public class Road {
 			System.out.println(to + "\n" + this);
 		}
 	}
-	
+	//Road constructor
 	public Road(Junction from,Junction to, ArrayList<VehicleType> allowed,boolean open, boolean enabled)
 	{
 		Random rand = new Random();
@@ -67,7 +67,7 @@ public class Road {
 			System.out.println(to + "\n" + this);
 		}
 	}
-	
+	//Copy Constructor
 	public Road(Road R){
 		fromJunc = R.fromJunc;
 		toJunc = R.toJunc;
@@ -76,8 +76,8 @@ public class Road {
 		isEnabled = R.isEnabled;
 		length = R.length;
 		maxSpeed = R.maxSpeed;
-	}//cctor
-	
+	}
+	//Sets And Gets to Road
 	public boolean getLight() {return isOpen;}//check if the light is green or not
 	public boolean getIsEnabled() {return isEnabled;}
 	public double getLength() {return length;}
@@ -85,14 +85,18 @@ public class Road {
 	public Junction getFromJunc() {return fromJunc;}
 	public ArrayList<VehicleType> getAllowedVehicles() {return allowedVehicles;}
 	public Junction getToJunc() {return toJunc;}
-	
 	public void setFromJunc(Junction fromJunc) {this.fromJunc = fromJunc;}
 	public void setToJunc(Junction toJunc) {this.toJunc = toJunc;}
-	public void setLight(boolean TorF){ isOpen=TorF; }
+	public void setLight(boolean TorF){ 
+		isOpen=TorF; 
+		if(TorF==true)
+			System.out.println(this);	
+		}
 	public void setAppears(boolean TorF){ isEnabled=TorF; }
 	public void setLength(double len){ length=len; }
 	public void setMaxSpeed (int max){ maxSpeed=max; }
 
+	
 	public void addVehicleType(VehicleType type) { allowedVehicles.add(type); }
 	
 	public double countLength()//calculates the length of the road using the coordinates
