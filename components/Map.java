@@ -21,7 +21,7 @@ public class Map {
         for(int i=0;i<10;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
     }; //Creates a map with 20 random junctions and connects all of them one to another with roads.
-
+    //Map constructor
     public Map (int junctions, int roads){
         String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
                                 ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};// 20 names of junctions
@@ -50,14 +50,14 @@ public class Map {
                     item.addExitingRoads(this.roads.get(rand.nextInt(this.roads.size())));
             }
     }; //Creates a random map with given quantity of junctions and roads.
-
+    //Map constructor
     public Map (ArrayList<Junction> juncs){
         junctions.addAll(juncs);
         
         for(int i=0;i<junctions.size()-1;i++)
             roads.add(new Road(junctions.get(i), junctions.get(i+1)));
     };
-
+    //Map constructor
     public Map (ArrayList<Junction>juncs, ArrayList<Road>roads){
         Random rand = new Random();
         junctions.addAll(juncs);
@@ -69,13 +69,12 @@ public class Map {
                 item.addExitingRoads(this.roads.get(rand.nextInt(this.roads.size())));
         }
     };
-
+    //Map constructor
     public Map(int numOfJunc)
     {
-        String[] namesOfJancs = {"Yehuda Alevi","Neve Zeev","Igal Yadin","Neot Leon","Ameshahrerim","Neve Itzhak","Ramot","Bialic","Ein Gedi","Patish","Gilat","Nahal Ashan","Amutot","Calaniot"
-                ,"Ein Ofarim","Nurit","Dan Patenkin","Shomron","Gertz","Kadesh"};
+        
         for(int i=0;i<numOfJunc;i++)
-            junctions.add(new Junction(""+i /*namesOfJancs[i%20]+ String.valueOf(i)*/,new Point()));
+            junctions.add(new Junction(""+i,new Point()));
         
         //roads add
         for(int i=0;i<numOfJunc;i++)
