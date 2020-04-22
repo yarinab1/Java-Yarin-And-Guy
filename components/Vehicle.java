@@ -12,7 +12,8 @@ public class Vehicle{
 	private Road lastRoad;
 	private boolean moveNow = false;//True if the vehicle is on the road between the junctions.
 	private double spentTime = 0;//time passed from the beginning of movement on the route.
-
+	
+	//Vehicle constructor
 	public Vehicle(int id,VehicleType type,Junction lastJunction){
 		this.id = id;
 		this.type = type;
@@ -94,6 +95,7 @@ public class Vehicle{
 	public void status(){
 		System.out.println(toString() + ". Position: Junction "+ lastJunction.getJunctionName() + ". Current Route: from Junction " + currentRoute.getStart().getJunctionName()+" to Junction " 
 		+ currentRoute.getEnd().getJunctionName() + ". Time spent on the route is - " + spentTime);
+		
 	} //prints the details about the vehicle including current position, time spent on the route and the first and last junctions on the route.
 
 	public void checkIn(){
