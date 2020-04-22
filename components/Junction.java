@@ -18,7 +18,7 @@ public class Junction {
 	private ArrayList<Road> vehicles = new ArrayList<>(); //list of entering roads with cars waiting on the junction
 	public int nextEnterRoad=0;
 	
-	public Junction (String name, Point loc)
+	public Junction (String name, Point loc)//Junction constructor
 	{
 		junctionName=name;
 		location= new Point(loc);
@@ -175,9 +175,4 @@ public class Junction {
 	public void addToVehicles(Road R){ vehicles.add(R); }
 	public void removefromVehicles(Road R){ vehicles.remove(R); }
 
-	public void printOpenRoads(){
-		for(int i = 0;i < enteringRoads.size() ; i++)
-			if(enteringRoads.get(i).getLight()) 
-				System.out.println(enteringRoads.get(i));
-	}
 }
