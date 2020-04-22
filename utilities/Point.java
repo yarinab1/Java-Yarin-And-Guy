@@ -18,7 +18,7 @@ public class Point {
 		this.y = rand.nextInt(limY) + rand.nextDouble();
 		System.out.println(toString() + " has been created.");
 	}
-	
+	//Point Constructor
 	public Point(double x,double y)
 	{
 		if(x >= 0 && x <=limX) this.x=x;
@@ -35,8 +35,8 @@ public class Point {
 		}
 		System.out.println(toString() + " has been created.");
 	}
-	
-	public Point(Point loc) {//copy constructor
+	//Copy Constructor
+	public Point(Point loc) {
 		
 		if(loc.x >= 0 && loc.x <=limX) this.x=loc.x;
 		else{
@@ -52,7 +52,8 @@ public class Point {
 		}
 		System.out.println(toString() + " has been created.");
 	}
-
+	
+	//Gets And Sets To Point
 	public double getX() {
 		return x;
 	}
