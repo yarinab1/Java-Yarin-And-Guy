@@ -11,6 +11,7 @@ public class VehicleType {
     private int speed; //average speed of vehicle type
     private static ArrayList<VehicleType> randomVehicleTypes;
 
+  //VehicleType Constructor	
     public VehicleType(String name,int speed){
         typeName = name;
         this.speed = speed;
