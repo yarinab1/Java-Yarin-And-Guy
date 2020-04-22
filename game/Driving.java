@@ -20,8 +20,8 @@ public class Driving {
         setNumOfJuncs(juncs);
         setNumOfVehicles(vehicles);
         this.setMaxTime(maxTime);
-		    addMapAs();
-		    addVehiclesAs();
+		addMapAs();
+		addVehiclesAs();
     }
 
     public int getNumOfJuncs() {
@@ -165,27 +165,6 @@ public class Driving {
     
     public void startDrive(int maxTime)
     {
-    	/*for(int i=0;i<maxTime;i++)
-    	{
-    		for(int j=0;j<numOfVehicles;j++)
-                currentVehicles.get(j).move();
-                
-
-    		ArrayList<String> Roads = new ArrayList<>();
-    		for(int h=0;h<currentVehicles.size();h++)
-    		{
-    			currentVehicles.get(h).getLastJunction().changeLights();
-    			for(int y=0;y<currentVehicles.get(h).getLastJunction().getVehicles().size();y++)
-    				if(currentVehicles.get(h).getLastJunction().getVehicles().get(y).getLight() && !Roads.contains(currentVehicles.get(h).getLastJunction().getVehicles().get(y).toString()))
-    				{
-    					System.out.println(currentVehicles.get(h).getLastJunction().getVehicles().get(y)+ " -green Light ");
-    					Roads.add(currentVehicles.get(h).getLastJunction().getVehicles().get(y).toString());
-    				}
-    		}
-        }
-        
-    	for(int i=0;i<currentVehicles.size();i++)
-            currentVehicles.get(i).status();*/
             
             for(int i=0; i<maxTime; i++)
             {
@@ -211,10 +190,8 @@ public class Driving {
                 for(Junction junction: currentMap.getJunctions())
                     junction.changeLights();
             }
-            for(Junction junction: currentMap.getJunctions())
-                junction.printOpenRoads();
 
-            System.out.println("\nSTATUS");
+            System.out.println("\nSTATUS:");
             for(Vehicle vehicle:currentVehicles)
                 vehicle.status();
     }
