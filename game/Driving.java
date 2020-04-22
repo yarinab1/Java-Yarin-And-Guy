@@ -14,7 +14,7 @@ public class Driving {
     private double drivingTime; // time passed from the beginning of driving session
     private int maxTime; // total round time
 
-    public Driving(int juncs, int vehicles, int maxTime)
+    public Driving(int juncs, int vehicles, int maxTime)//Driving constructor
     {
         VehicleType.setRandomVehicleTypes();
         setNumOfJuncs(juncs);
@@ -23,7 +23,8 @@ public class Driving {
 		addMapAs();
 		addVehiclesAs();
     }
-
+    
+    //Sets And Gets to Driving
     public int getNumOfJuncs() {
         return numOfJuncs;
     }
@@ -72,6 +73,7 @@ public class Driving {
         this.maxTime = maxTime;
     }
 
+    
     public void addMapAs(){ //creates a map with junctions quantity as nunOfJuncs amount.
         currentMap = new Map(numOfJuncs);
     }
@@ -83,6 +85,7 @@ public class Driving {
         
         currentMap = new Map(numOfJuncs);
     }
+    
 
     public void addVehicles(){ //creates random number (2-8) of vehicles of different types.
         Random rand = new Random();
