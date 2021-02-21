@@ -4,4 +4,4 @@
 * The project simulates movement of cars on roads with junctions and Traffic lights. 
 * This project based on the assignment instructions we received from the course. (Advanced OOP)
 
-*Note - a some of the design patterns are not necessary but they are intended for learning and answering the project tasks.
+*Note: some of the design patterns are not necessary but they are intended for learning and answering the assiment tasks.
